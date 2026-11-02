@@ -12,15 +12,24 @@ import { fetchProducts, Product } from "@/data/products";
 import { Badge } from "@/components/tailgrids/core/badge";
 import { doLogout } from "@/utils/login";
 import { useRouter } from "next/navigation";
+import type { Credential } from "@/data/credential";
 
 export const globalDataContext = createContext<any>(null);
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   const pathname = usePathname();
-  const router = useRouter()
+  const router = useRouter();
 
   const [products, setProducts] = useState<Product[]>([]);
   const [carts, setCarts] = useState<Product[]>([]);
+  const [credential, setCredential] = useState<Credential | null>(null);
+
+  useEffect(() => {
+    const storedCredential = localStorage.getItem("credential");
+    setCredential(
+      storedCredential ? (JSON.parse(storedCredential) as Credential) : null,
+    );
+  }, [pathname]);
 
   useEffect(() => {
     fetchProducts()
@@ -33,7 +42,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   }, [products]);
 
   const handleLogout = () => {
-    doLogout(router, '/login')
+    doLogout(router, "/login");
   };
 
   return (
@@ -125,6 +134,24 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               Logout
             </Button>
           </nav>
+          <div className="my-4 flex flex-wrap justify-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Role
+              </span>
+              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700 shadow-sm">
+                {credential?.role ?? "-"}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                User
+              </span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700 shadow-sm">
+                {credential?.name ?? "-"}
+              </span>
+            </div>
+          </div>
           <main className="min-h-full flex flex-col">{children}</main>
           <Footer />
         </body>
