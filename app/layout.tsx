@@ -139,7 +139,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                 Role
               </span>
-              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700 shadow-sm">
+              <span className="rounded-full bg-cyan-100 px-3 py-1 text-sm font-semibold text-cyan-700 shadow-sm">
                 {credential?.role ?? "-"}
               </span>
             </div>
@@ -147,8 +147,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                 User
               </span>
-              <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700 shadow-sm">
+              <span className="rounded-full bg-blue-100 px-3 py-1 text-sm font-semibold text-blue-700 shadow-sm">
                 {credential?.name ?? "-"}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                Email
+              </span>
+              <span className="rounded-full bg-emerald-100 px-3 py-1 text-sm font-semibold text-emerald-700 shadow-sm">
+                {credential?.email ?? "-"}
               </span>
             </div>
           </div>
